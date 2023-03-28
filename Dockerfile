@@ -9,10 +9,10 @@ RUN npm run build
 # ---- Construye la aplicación Express ----
 FROM node:19-alpine3.16
 WORKDIR /app
-COPY package*.json ./
+COPY ./backend/package*.json ./
 RUN npm ci
 COPY . .
 COPY --from=react-builder /app/dist ./saludofront-app/dist
 EXPOSE 4000
 
-CMD ["node", "index.js"]
+CMD ["node", "backend/index.js"]
