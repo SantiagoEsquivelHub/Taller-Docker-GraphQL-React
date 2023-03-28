@@ -8,6 +8,7 @@ const typeDefs = gql`
     hello(message: String!): String
     calculator(value1: Int!, value2: Int!): String
     fibonacci(number: Int! = 5): [Int]
+    xthree(number: Int! = 3): String
   }
 `;
 
@@ -31,6 +32,9 @@ const resolvers = {
         b = f;
       }
       return fibonacci;
+    },
+    xthree: (_, { number }) => {
+      return `El producto de ${number} por 3 es: ${number*3}`;
     }
   },
 };
