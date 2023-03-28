@@ -1,7 +1,6 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 const path = require('path'); 
-const { dirname } = require('path');
 
 // Define el esquema de GraphQL
 const typeDefs = gql`
@@ -31,9 +30,9 @@ async function startApolloServer() {
 
   // Aplica el middleware de Apollo Server a la aplicación Express
   server.applyMiddleware({ app, path: '/graphql' });
-  console.log(__dirname)
+
   // Sirve la aplicación de React desde la carpeta "saludofront-app"
-   const reactAppPath = path.join(__dirname, 'saludofront-app', 'dist');
+   const reactAppPath = path.join(__dirname, '../saludofront-app', 'dist');
     app.use(express.static(reactAppPath));
     app.get('*', (req, res) => {
     res.sendFile(path.join(reactAppPath, 'index.html'));

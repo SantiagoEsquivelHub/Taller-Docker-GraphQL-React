@@ -13,6 +13,12 @@ const HELLO_QUERY = gql`
   }
 `;
 
+const CALCULATOR_QUERY = gql`
+  query Calculator($value1: Int!, $value2: Int!) {
+    Calculator(value1: $value1, value2: $value2)
+  }
+`;
+
 function Hello() {
   const [message, setMessage] = useState('');
   const [getGreeting, { loading, error, data }] = useLazyQuery(HELLO_QUERY);
