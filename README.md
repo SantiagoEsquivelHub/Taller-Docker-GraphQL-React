@@ -2,8 +2,8 @@
 
 Primero nos paramos en la raíz y ejecutamos:
 
-* Backend: 
+* Backend: \
     npm start
-* Frontend: 
+* Frontend: \
     cd saludofront-app \
     npm run dev 
