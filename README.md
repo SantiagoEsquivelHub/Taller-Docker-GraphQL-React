@@ -6,4 +6,5 @@ Primero nos paramos en la raíz y ejecutamos:
     npm start
 * **Frontend:** \
     cd saludofront-app \
+    npm install \
     npm run dev 
