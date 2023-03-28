@@ -3,8 +3,10 @@
 Primero nos paramos en la raíz y ejecutamos:
 
 * **Backend:** \
-    npm start \
+    cd backend \
+    npm install \
     npm start
 * **Frontend:** \
     cd saludofront-app \
+    npm install \
     npm run dev 
