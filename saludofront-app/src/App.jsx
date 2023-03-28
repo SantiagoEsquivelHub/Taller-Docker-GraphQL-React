@@ -25,7 +25,11 @@ const FIBONACCI_QUERY = gql`
     fibonacci(number: $number)
   }
 `;
-
+const LONGNAME_QUERY = gql`
+query LongName($delivery: String!) {
+  longName(delivery: $delivery)
+  }
+`;
 function Hello() {
   const [message, setMessage] = useState('');
   const [getGreeting, { loading, error, data }] = useLazyQuery(HELLO_QUERY);
@@ -144,7 +148,38 @@ function Fibonacci() {
     </div>
   );
 }
+function  LongName() {
+  const [delivery, setMessage] = useState("");
+  const [getGreeting, { loading, error, data }] = useLazyQuery(LONGNAME_QUERY);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getGreeting({ variables: { delivery } });
+  };
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return (
+    <div>
+      <h2>Victor Alomia (HU-VA-0003)</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formLongName">
+          <Form.Control
+            type="text"
+            value={delivery}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Escribe tu mensaje"
+          />
+        </Form.Group>
+        <Button className="mt-2" variant="primary" type="submit">
+          Enviar
+        </Button>
+      </Form>
+      {data && <h2 className="mt-3">{data.longName}</h2>}
+    </div>
+  );
+}
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -157,6 +192,8 @@ function App() {
             <Calculator />
             <br />
             <Fibonacci />
+            <br />
+             < LongName/> 
           </Col>
         </Row>
       </Container>
