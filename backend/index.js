@@ -8,6 +8,7 @@ const typeDefs = gql`
     hello(message: String!): String
     calculator(value1: Int!, value2: Int!): String
     fibonacci(number: Int! = 5): [Int]
+    longName(delivery: String!): String
   }
 `;
 
@@ -31,8 +32,13 @@ const resolvers = {
         b = f;
       }
       return fibonacci;
-    }
-  },
+    },
+    longName: (_, { delivery}) => {
+      const sent=delivery.length;
+         return `¡Hola, ${delivery} tu mensaje tiene ${sent} caracteres   `;
+       },
+
+  }
 };
 
 async function startApolloServer() {
