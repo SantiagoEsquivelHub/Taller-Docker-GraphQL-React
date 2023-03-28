@@ -7,6 +7,7 @@ const typeDefs = gql`
   type Query {
     hello(message: String!): String
     calculator(value1: Int!, value2: Int!): String
+    fibonacci(number: Int! = 5): [Int]
   }
 `;
 
@@ -20,6 +21,17 @@ const resolvers = {
       let result = value1 + value2
       return `¡La suma de  ${value1} y ${value2} es: ${result} `;
     },
+    fibonacci: (_, { number }) => {
+      let a = 0, b = 1, f = 1;
+      let fibonacci = [];
+      for (let i = 0; i < number; i++) {
+        fibonacci.push(f);
+        f = a + b;
+        a = b;
+        b = f;
+      }
+      return fibonacci;
+    }
   },
 };
 
