@@ -33,10 +33,10 @@ const resolvers = {
       }
       return fibonacci;
     },
-    longName: (_, { delivery}) => {
-      const sent=delivery.length;
-         return `¡Hola, ${delivery} tu mensaje tiene ${sent} caracteres   `;
-       },
+    longName: (_, { delivery }) => {
+      const sent = delivery.length;
+      return `¡Hola, ${delivery} tu mensaje tiene ${sent} caracteres   `;
+    },
 
   }
 };

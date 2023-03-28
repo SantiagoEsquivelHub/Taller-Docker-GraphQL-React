@@ -75,7 +75,6 @@ function Calculator() {
     if (value2 === "") {
       setValue2(0)
     }
-    console.log({ value1, value2})
 
     getGreeting({ variables: { value1, value2 } });
   };
@@ -137,18 +136,18 @@ function Fibonacci() {
             type="number"
             value={number}
             onChange={(e) => setNumber(parseInt(e.target.value))}
-            placeholder="Escribe número a caclular fibonacci"
+            placeholder="Escribe número a calcular fibonacci"
           />
         </Form.Group>
         <Button className='mt-2' variant="primary" type="submit">
           Enviar
         </Button>
       </Form>
-      {data && <h2 className='mt-3'>{data.fibonacci.toString().replace(/,/g, ", ")}</h2>}
+      {data && <h2 className='mt-3'>{data.fibonacci.toString().replace(/,/g, ', ')}</h2>}
     </div>
   );
 }
-function  LongName() {
+function LongName() {
   const [delivery, setMessage] = useState("");
   const [getGreeting, { loading, error, data }] = useLazyQuery(LONGNAME_QUERY);
 
@@ -187,13 +186,13 @@ function App() {
         <Row>
           <Col xs={12} md={{ span: 6, offset: 3 }}>
             <h1>Aplicación React y GraphQL</h1>
-            {/* <Hello /> */}
+            <Hello />
             <br />
             <Calculator />
             <br />
             <Fibonacci />
             <br />
-             < LongName/> 
+            <LongName />
           </Col>
         </Row>
       </Container>
