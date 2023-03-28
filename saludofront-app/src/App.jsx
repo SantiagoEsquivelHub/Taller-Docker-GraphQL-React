@@ -19,6 +19,13 @@ const CALCULATOR_QUERY = gql`
   }
 `;
 
+
+const FIBONACCI_QUERY = gql`
+  query Fibonacci($number: Int) {
+    fibonacci(number: $number)
+  }
+`;
+
 function Hello() {
   const [message, setMessage] = useState('');
   const [getGreeting, { loading, error, data }] = useLazyQuery(HELLO_QUERY);
@@ -99,6 +106,45 @@ function Calculator() {
   );
 }
 
+function Fibonacci() {
+  const [number, setNumber] = useState("");
+  const [getFibo, { loading, error, data }] = useLazyQuery(FIBONACCI_QUERY);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (number === "") {
+      setNumber(0)
+    }
+
+    parseInt(number)
+
+    getFibo({ variables: { number } });
+  };
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return (
+    <div>
+      <h2>Juan Velasquez (HU-JV-0002)</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formCalculator">
+          <Form.Control
+            type="number"
+            value={number}
+            onChange={(e) => setNumber(parseInt(e.target.value))}
+            placeholder="Escribe número a caclular fibonacci"
+          />
+        </Form.Group>
+        <Button className='mt-2' variant="primary" type="submit">
+          Enviar
+        </Button>
+      </Form>
+      {data && <h2 className='mt-3'>{data.fibonacci.toString().replace(/,/g, ", ")}</h2>}
+    </div>
+  );
+}
+
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -106,9 +152,11 @@ function App() {
         <Row>
           <Col xs={12} md={{ span: 6, offset: 3 }}>
             <h1>Aplicación React y GraphQL</h1>
-            <Hello />
+            {/* <Hello /> */}
             <br />
             <Calculator />
+            <br />
+            <Fibonacci />
           </Col>
         </Row>
       </Container>
