@@ -25,6 +25,11 @@ const FIBONACCI_QUERY = gql`
     fibonacci(number: $number)
   }
 `;
+const LONGNAME_QUERY = gql`
+query LongName($delivery: String!) {
+  longName(delivery: $delivery)
+  }
+`;
 
 const XTHREE_QUERY = gql`
   query Xthree($number: Int) {
@@ -77,7 +82,6 @@ function Calculator() {
     if (value2 === "") {
       setValue2(0)
     }
-    console.log({ value1, value2})
 
     getGreeting({ variables: { value1, value2 } });
   };
@@ -139,18 +143,49 @@ function Fibonacci() {
             type="number"
             value={number}
             onChange={(e) => setNumber(parseInt(e.target.value))}
-            placeholder="Escribe número a caclular fibonacci"
+            placeholder="Escribe número a calcular fibonacci"
           />
         </Form.Group>
         <Button className='mt-2' variant="primary" type="submit">
           Enviar
         </Button>
       </Form>
-      {data && <h2 className='mt-3'>{data.fibonacci.toString().replace(/,/g, ", ")}</h2>}
+      {data && <h2 className='mt-3'>{data.fibonacci.toString().replace(/,/g, ', ')}</h2>}
     </div>
   );
 }
+function LongName() {
+  const [delivery, setMessage] = useState("");
+  const [getGreeting, { loading, error, data }] = useLazyQuery(LONGNAME_QUERY);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getGreeting({ variables: { delivery } });
+  };
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return (
+    <div>
+      <h2>Victor Alomia (HU-VA-0003)</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formLongName">
+          <Form.Control
+            type="text"
+            value={delivery}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Escribe tu mensaje"
+          />
+        </Form.Group>
+        <Button className="mt-2" variant="primary" type="submit">
+          Enviar
+        </Button>
+      </Form>
+      {data && <h2 className="mt-3">{data.longName}</h2>}
+    </div>
+  );
+}
 function XThree() {
   const [number, setNumber] = useState("");
   const [getThree, { loading, error, data }] = useLazyQuery(XTHREE_QUERY);
@@ -197,11 +232,13 @@ function App() {
         <Row>
           <Col xs={12} md={{ span: 6, offset: 3 }}>
             <h1>Aplicación React y GraphQL</h1>
-            {/* <Hello /> */}
+            <Hello />
             <br />
             <Calculator />
             <br />
             <Fibonacci />
+            <br />
+            <LongName />
             <br />
             <XThree />
           </Col>
