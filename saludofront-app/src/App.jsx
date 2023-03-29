@@ -30,6 +30,13 @@ query LongName($delivery: String!) {
   longName(delivery: $delivery)
   }
 `;
+
+const XTHREE_QUERY = gql`
+  query Xthree($number: Int) {
+    xthree(number: $number)
+  }
+`;
+
 function Hello() {
   const [message, setMessage] = useState('');
   const [getGreeting, { loading, error, data }] = useLazyQuery(HELLO_QUERY);
@@ -179,6 +186,45 @@ function LongName() {
     </div>
   );
 }
+function XThree() {
+  const [number, setNumber] = useState("");
+  const [getThree, { loading, error, data }] = useLazyQuery(XTHREE_QUERY);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (number === "") {
+      setNumber(0)
+    }
+
+    parseInt(number)
+
+    getThree({ variables: { number } });
+  };
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return (
+    <div>
+      <h2>Javier Castrillon (HU-JC-0004)</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formCalculator">
+          <Form.Control
+            type="number"
+            value={number}
+            onChange={(e) => setNumber(parseInt(e.target.value))}
+            placeholder="Escribe un número para multiplicarlo por 3"
+          />
+        </Form.Group>
+        <Button className='mt-2' variant="primary" type="submit">
+          Enviar
+        </Button>
+      </Form>
+      {data && <h2 className='mt-3'>{data.xthree}</h2>}
+    </div>
+  );
+}
+
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -193,6 +239,8 @@ function App() {
             <Fibonacci />
             <br />
             <LongName />
+            <br />
+            <XThree />
           </Col>
         </Row>
       </Container>
